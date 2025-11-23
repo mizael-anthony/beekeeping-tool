@@ -3,8 +3,7 @@
 import Image from "next/image";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import Link from "next/link";
-import { signUp } from "@/app/actions/auth/signUp";
+import { signUp } from "@/actions/auth/signUp";
 import { useForm } from "react-hook-form";
 import { SignUpSchema, SignUp } from "@/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
