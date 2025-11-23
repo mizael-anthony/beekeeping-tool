@@ -1,7 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { calculateRisk, getRatingLabel } from "@/services/calculateRisk";
+import { calculateRisk } from "@/services/calculateRisk";
+import {
+  RatingScaleKey,
+  inactiveRatingClass,
+  ratingScales,
+} from "@/components/report/rating-config";
+import { Lightbulb } from "lucide-react";
 import { ReportFormInput } from "@/types/report";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -96,24 +102,28 @@ export default function ReportCreateForm({ onCreate }: ReportCreateFormProps) {
           description="Conditions météo affectant butinage et santé"
           value={climate}
           onChange={setClimate}
+          factor="climate"
         />
         <RatingControl
           label="Pression maladies"
           description="Parasites, pathogènes ou signes de maladies"
           value={disease}
           onChange={setDisease}
+          factor="disease"
         />
         <RatingControl
           label="Disponibilité florale"
           description="Abondance et diversité des ressources"
           value={floral}
           onChange={setFloral}
+          factor="floral"
         />
         <RatingControl
           label="Résilience de la colonie"
           description="Force, population, qualité de la reine"
           value={resilience}
           onChange={setResilience}
+          factor="resilience"
         />
       </div>
 
@@ -122,11 +132,14 @@ export default function ReportCreateForm({ onCreate }: ReportCreateFormProps) {
           <div className="flex flex-col gap-3">
             <p className="text-sm text-amber-700">Score global</p>
             <div className="text-4xl font-bold text-amber-900">
-              {risk.globalScore.toFixed(0)}
-              <span className="text-lg text-amber-700">/100</span>
+              {risk.globalScore}
+              <span className="text-lg text-amber-700">/12</span>
             </div>
             <p className="font-semibold text-amber-900">Niveau : {risk.globalLevel}</p>
-            <p className="text-sm text-amber-800 leading-relaxed">Conclusion : {risk.conclusion}</p>
+            <div className="flex items-start gap-2 text-sm text-amber-800 leading-relaxed">
+              <Lightbulb className="mt-0.5 h-4 w-4 text-amber-600" />
+              <p>Conseil : {risk.conclusion}</p>
+            </div>
           </div>
         </Card>
       )}
@@ -149,9 +162,12 @@ type RatingControlProps = {
   description: string;
   value: number;
   onChange: (val: number) => void;
+  factor: RatingScaleKey;
 };
 
-function RatingControl({ label, description, value, onChange }: RatingControlProps) {
+function RatingControl({ label, description, value, onChange, factor }: RatingControlProps) {
+  const options = ratingScales[factor];
+
   return (
     <Card className="p-4">
       <div className="mb-2">
@@ -159,24 +175,18 @@ function RatingControl({ label, description, value, onChange }: RatingControlPro
         <p className="text-sm text-amber-700">{description}</p>
       </div>
       <div className="flex gap-2">
-        {[1, 2, 3].map((rating) => (
+        {options.map((option) => (
           <button
-            key={rating}
+            key={option.value}
             type="button"
-            onClick={() => onChange(rating)}
+            onClick={() => onChange(option.value)}
             className={cn(
               "flex-1 rounded-lg px-3 py-2 text-sm font-semibold transition-all",
-              value === rating
-                ? rating === 1
-                  ? "bg-green-500 text-white shadow-md"
-                  : rating === 2
-                  ? "bg-orange-500 text-white shadow-md"
-                  : "bg-red-500 text-white shadow-md"
-                : "border border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100"
+              value === option.value ? option.className : inactiveRatingClass
             )}
           >
-            <div className="text-lg">{rating}</div>
-            <div className="text-xs">{getRatingLabel(rating)}</div>
+            <div className="text-lg">{option.value}</div>
+            <div className="text-xs">{option.label}</div>
           </button>
         ))}
       </div>

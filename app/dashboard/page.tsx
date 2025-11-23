@@ -112,7 +112,7 @@ export default function Page() {
           <StatCard
             icon={<AlertTriangle className="h-6 w-6 text-amber-600" />}
             label="Niveaux"
-            value={`${stats.low} faible • ${stats.moderate} modéré • ${stats.high} élevé`}
+            value={`${stats.low} faible(s) • ${stats.moderate} modéré(s) • ${stats.high} élevé(s)`}
             description
           />
         </div>

@@ -2,10 +2,10 @@ import { RiskFactors, RiskResult } from "@/types/report";
 
 export const calculateRisk = (factors: RiskFactors): RiskResult => {
   const normalizedScores = {
-    climate: (factors.climate / 3) * 100,
-    disease: (factors.disease / 3) * 100,
-    floral: (factors.floral / 3) * 100,
-    resilience: (factors.resilience / 3) * 100
+    climate: factors.climate,
+    disease: factors.disease,
+    floral: factors.floral,
+    resilience: factors.resilience
   };
 
   const globalScore = (
@@ -13,23 +13,23 @@ export const calculateRisk = (factors: RiskFactors): RiskResult => {
     normalizedScores.disease +
     normalizedScores.floral +
     normalizedScores.resilience
-  ) / 4;
+  );
 
   let globalLevel: 'Faible' | 'Modéré' | 'Elevé';
   let conclusion: string;
-  if (globalScore < 33) {
-    globalLevel = 'Faible';
-    conclusion = 'Maintenir les bonnes pratiques apicoles.';
-  } else if (globalScore < 66) {
-    globalLevel = 'Modéré';
-    conclusion = 'Renforcer la surveillance des colonies et les traitements.';
-  } else {
+  if (globalScore > 9) {
     globalLevel = 'Elevé';
-    conclusion = 'Agir rapidement: lutte anti-varroa, reboisement, transhumanitaire, renforcement de l\'alimentation.';
+    conclusion = 'Agir rapidement: lutte anti-varroa, reboisement, renforcement de l\'alimentation';
+  } else if (globalScore > 6) {
+    globalLevel = 'Modéré';
+    conclusion = 'Renforcer la surveillance des colonies et les traitements';
+  } else {
+    globalLevel = 'Faible';
+    conclusion = 'Maintenir les bonnes pratiques apicoles';
   }
 
   return {
-    globalScore: Math.round(globalScore * 100) / 100,
+    globalScore,
     globalLevel,
     normalizedScores,
     conclusion,
@@ -50,7 +50,7 @@ export const getRatingLabel = (rating: number): string => {
 };
 
 export const levelFromScore = (score: number) => {
-  if (score < 33) return 'Faible';
-  if (score < 66) return 'Modéré';
-  return 'Elevé';
+  if (score > 9) return 'Elevé';
+  if (score > 6) return 'Modéré';
+  return 'Faible';
 };
