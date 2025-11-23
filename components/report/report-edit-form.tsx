@@ -13,12 +13,14 @@ type ReportEditFormProps = {
   report: Report;
   onSave: (report: Report) => Promise<void> | void;
   onCancel: () => void;
+  onDelete?: () => void;
 };
 
 export default function ReportEditForm({
   report,
   onSave,
   onCancel,
+  onDelete,
 }: ReportEditFormProps) {
   const [beehive, setBeehive] = useState(report.beehive);
   const [climate, setClimate] = useState(report.climate);
@@ -62,11 +64,20 @@ export default function ReportEditForm({
       onSubmit={handleSubmit}
       className="space-y-4 rounded-xl bg-white p-6 shadow-sm ring-1 ring-amber-100/70"
     >
-      <div>
-        <h3 className="text-xl font-semibold text-amber-900">Modifier le rapport</h3>
-        <p className="text-sm text-amber-700">
-          Ajustez les facteurs, le score sera recalculé.
-        </p>
+      <div className="space-y-2">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h3 className="text-xl font-semibold text-amber-900">Modifier le rapport</h3>
+            <p className="text-sm text-amber-700">
+              Ajustez les facteurs, le score sera recalculé.
+            </p>
+          </div>
+          {onDelete && (
+            <Button variant="destructive" onClick={onDelete}>
+              Supprimer le rapport
+            </Button>
+          )}
+        </div>
       </div>
 
       <div className="space-y-2">
@@ -122,7 +133,7 @@ export default function ReportEditForm({
   );
 }
 
-type NumberFieldProps = {
+type RatingControlProps = {
   label: string;
   description: string;
   value: number;

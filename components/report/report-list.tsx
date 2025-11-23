@@ -3,7 +3,12 @@
 import { Report } from "@/types/report";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Edit, Trash2, FileText, AlertTriangle, CalendarDays } from "lucide-react";
+import {
+  Edit,
+  Trash2,
+  FileText,
+  AlertTriangle,
+} from "lucide-react";
 import { cn, formatDate } from "@/lib/utils";
 
 type ReportListProps = {
@@ -44,7 +49,9 @@ export default function ReportList({
                 <h4 className="text-lg font-semibold text-amber-900">
                   {report.beehive}
                 </h4>
-                <p className="text-sm text-amber-700">Score : {report.score}%</p>
+                <p className="text-sm text-amber-700">
+                  {formatDate(new Date(report.created_at))}
+                </p>
                 <div className="mt-2 flex flex-wrap gap-2 text-xs text-amber-800">
                   <Pill label="Climat" value={report.climate} />
                   <Pill label="Maladies" value={report.disease} />
@@ -97,8 +104,10 @@ function RiskBadge({ level }: { level: Report["level"] }) {
     <span
       className={cn(
         "rounded-full px-3 py-1 text-sm font-semibold",
-        level === "Faible" && "bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200",
-        level === "Modéré" && "bg-amber-100 text-amber-700 ring-1 ring-amber-200",
+        level === "Faible" &&
+          "bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200",
+        level === "Modéré" &&
+          "bg-amber-100 text-amber-700 ring-1 ring-amber-200",
         level === "Elevé" && "bg-red-100 text-red-700 ring-1 ring-red-200"
       )}
     >

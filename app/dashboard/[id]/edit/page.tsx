@@ -90,16 +90,12 @@ export default function EditReportPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50">
+    <div className="min-h-screen bg-linear-to-br from-amber-50 via-yellow-50 to-orange-50">
       <div className="pointer-events-none absolute inset-0 opacity-5 bg-honeycomb" />
       <main className="container relative mx-auto px-6 py-10">
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-amber-900">Modifier le rapport</h1>
-          <p className="text-amber-700">ID : {reportId}</p>
           <div className="mt-4">
-            <Button variant="destructive" onClick={handleDelete}>
-              Supprimer le rapport
-            </Button>
             <div className="mt-3">
               <Button asChild variant="secondary">
                 <Link href="/dashboard">← Retour au tableau de bord</Link>
@@ -125,6 +121,7 @@ export default function EditReportPage() {
             report={report}
             onSave={handleSave}
             onCancel={() => router.push("/dashboard")}
+            onDelete={handleDelete}
           />
         )}
       </main>
