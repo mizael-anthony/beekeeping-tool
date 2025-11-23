@@ -32,3 +32,6 @@
 ## Security & Configuration
 - Required env vars: `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` (set in `.env.local`, never committed). Ensure values are present for browser, server, and middleware clients.
 - Avoid committing secrets or build artifacts (`.next/`, `out/`). Validate that third-party scripts or fonts are loaded via HTTPS.
+
+## Important
+- Always use Shadcn UI component as possible

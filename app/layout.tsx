@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/lib/providers/react-query-provider";
+import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/lib/providers/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,14 +16,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Beekeeping tool',
-  description: 'Web app to anticipate honey yield',
+  title: "Beekeeping tool",
+  description: "Web app to anticipate honey yield",
   keywords: "Abeille, Apiculture, Apicole, Ruche",
-  authors: [{ name: 'Mizael' }],
+  authors: [{ name: "Mizael" }],
   icons: {
-    icon: '/images/favicon.ico',
-    shortcut: '/images/favicon.ico',
-    apple: '/images/favicon.ico',
+    icon: "/images/favicon.ico",
+    shortcut: "/images/favicon.ico",
+    apple: "/images/favicon.ico",
   },
 };
 
@@ -33,11 +35,22 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen`}
       >
-        <ReactQueryProvider>
-          {children}
-        </ReactQueryProvider>
+        <ThemeProvider>
+          <ReactQueryProvider>
+            <div className="relative min-h-screen">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 bg-honeycomb opacity-5"
+              />
+              <div className="relative z-10">
+                {children}
+              </div>
+            </div>
+            <Toaster />
+          </ReactQueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -25,4 +25,5 @@ export const ReportDetailSchema = z.object({
 })
 
 
+export type ReportCreate = z.infer<typeof ReportCreateSchema>
 export type ReportDetail = z.infer<typeof ReportDetailSchema>
