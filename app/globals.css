@@ -129,3 +129,8 @@
   background-size: 60px 60px;
   background-repeat: repeat;
 }
+
+.animate-honey-drop {
+  animation: honey-drop 1.6s ease-in-out infinite;
+  transform-origin: top;
+}
