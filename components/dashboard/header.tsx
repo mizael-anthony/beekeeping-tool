@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
-import { signOut } from "@/actions/auth/signOut";
+import { signOut } from "@/app/actions/actions/auth/signOut";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Image from "next/image";

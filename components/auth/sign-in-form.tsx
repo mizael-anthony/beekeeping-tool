@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { signIn } from "@/actions/auth/signIn";
+import { signIn } from "@/app/actions/actions/auth/signIn";
 import { SignIn, SignInSchema } from "@/types/auth";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";

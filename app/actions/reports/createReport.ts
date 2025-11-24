@@ -1,11 +1,11 @@
 "use server";
 
 import actionClient, { SafeError } from "@/lib/actions/safe-action-client";
-import { ReportFormSchema, type ReportFormInput, type Report } from "@/types/report";
+import { ReportFormSchema, type Report, type ReportRow } from "@/types/report";
 import { createClient } from "@/lib/supabase/server";
 import { calculateRisk, levelFromScore } from "@/services/calculateRisk";
 
-const mapRowToReport = (row: any): Report => ({
+const mapRowToReport = (row: ReportRow): Report => ({
   id: row.id,
   beehive: row.beehive,
   conclusion: row.conclusion,
@@ -15,7 +15,7 @@ const mapRowToReport = (row: any): Report => ({
   resilience: row.colony_resilience,
   score: row.score,
   level: levelFromScore(row.score),
-  created_at: row.created_at ?? undefined,
+  created_at: row.created_at
 });
 
 export const createReport = actionClient
@@ -30,7 +30,6 @@ export const createReport = actionClient
     if (userError || !user) {
       throw new SafeError("Utilisateur non authentifié");
     }
-
     const risk = calculateRisk(parsedInput);
 
     const { data, error } = await supabase

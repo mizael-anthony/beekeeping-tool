@@ -59,8 +59,21 @@ export type Report = {
   resilience: number;
   score: number;
   level: RiskLevel;
-  created_at: string;
+  created_at?: string | null;
 }
+
+export type ReportRow = {
+  id: number;
+  beehive: string;
+  conclusion: string;
+  climatic_impact: number;
+  disease_impact: number;
+  floral_availability: number;
+  colony_resilience: number;
+  score: number;
+  user_id?: string;
+  created_at?: string | null;
+};
 
 export const ReportFormSchema = z.object({
   beehive: z.string().min(1),

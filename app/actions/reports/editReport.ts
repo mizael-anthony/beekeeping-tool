@@ -5,11 +5,12 @@ import {
   ReportUpdateSchema,
   type ReportUpdateInput,
   type Report,
+  type ReportRow,
 } from "@/types/report";
 import { createClient } from "@/lib/supabase/server";
 import { calculateRisk, levelFromScore } from "@/services/calculateRisk";
 
-const mapRowToReport = (row: any): Report => ({
+const mapRowToReport = (row: ReportRow): Report => ({
   id: row.id,
   beehive: row.beehive,
   conclusion: row.conclusion,
