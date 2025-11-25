@@ -50,7 +50,9 @@ export default function ReportList({
                   {report.beehive}
                 </h4>
                 <p className="text-sm text-amber-700">
-                  {formatDate(new Date(report.created_at))}
+                  {report.created_at
+                    ? formatDate(new Date(report.created_at))
+                    : "Date inconnue"}
                 </p>
                 <div className="mt-2 flex flex-wrap gap-2 text-xs text-amber-800">
                   <Pill label="Climat" value={report.climate} />
